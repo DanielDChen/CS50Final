@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta name="viewport" content="user-scalable=no,width=device-width" />
+    <script>
+    
+    </script>
+    <style>
+        * {
+        box-sizing: border-box;
+    }
+    
+    body {
+        margin: 0;
+    }
+    
+    button:hover {
+        cursor: pointer;
+    }
+    
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    .pd2139-label-6 {
+      width: 785px;
+      flex-shrink: 0;
+      font-family: Copperplate, 'Copperplate Gothic Light', fantasy;
+      color: #000000;
+      font-size: 31px;
+      font-weight: normal;
+      font-style: normal;
+      text-decoration: none;
+      text-align: left;
+      word-wrap: break-word;
+      min-height: 38px;
+    }
+    
+    .pd2139-0-0-0-0-0 {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      flex-shrink: 0;
+      padding-left: 30px;
+      padding-right: 100px;
+    }
+    
+    .pd2139-label2 {
+      width: 655px;
+      flex-shrink: 0;
+      font-family: Copperplate, 'Copperplate Gothic Light', fantasy;
+      color: #000000;
+      font-size: 25px;
+      font-weight: normal;
+      font-style: normal;
+      text-decoration: none;
+      text-align: left;
+      word-wrap: break-word;
+      min-height: 34px;
+    }
+    
+    .pd2139-0-0-0-0-1 {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      flex-shrink: 0;
+      margin-top: 13px;
+      padding-left: 30px;
+      padding-right: 230px;
+    }
+    
+    .pd2139-table-container-4 {
+      width: 788px;
+      height: 286px;
+      flex-shrink: 0;
+      background: rgba(216, 216, 216, 0);
+      align-items: center;
+      display: table;
+    }
+    
+    .pd2139-0-0-0-0-2 {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      flex-shrink: 0;
+      margin-top: 29px;
+      padding-left: 63px;
+      padding-right: 64px;
+    }
+    
+    .pd2139-layout-6 {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      padding-top: 11px;
+      padding-bottom: 68px;
+      background: rgba(255, 249, 249, 0.9);
+    }
+    
+    .pd2139-0-0-0 {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      flex-shrink: 0;
+      padding-left: 183px;
+      padding-right: 183px;
+    }
+    
+    .pd2139-return-6 {
+      width: 181px;
+      height: 43px;
+      flex-shrink: 0;
+      border-radius: 19px;
+      background: #337ab7;
+      font-family: Copperplate, 'Copperplate Gothic Light', fantasy;
+      color: #fff;
+      font-size: 17px;
+      font-weight: normal;
+      font-style: normal;
+      text-decoration: none;
+      text-align: center;
+      word-wrap: break-word;
+      border: none;
+    }
+    
+    .pd2139-0-0-1 {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      flex-shrink: 0;
+      margin-top: 34px;
+      padding-left: 907px;
+      padding-right: 193px;
+    }
+    
+    .pd2139-0-0 {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      padding-top: 98px;
+      padding-bottom: 0px;
+    }
+    
+    .pd2139-artboard-2 {
+      display: flex;
+      flex-direction: column;
+      padding-top: 0px;
+      padding-bottom: 55px;
+      background: #FFFFFF;
+      background-image: url('https://ucarecdn.com/d82f4918-26ae-4bdb-8a86-a67ae70de4c5/');
+      background-size: cover;
+      background-position-x: 50%;
+      min-height: 100vh;
+    }
+    
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        align-items: center;
+    }
+    
+    th, td {
+        padding: 15px;
+    }
+    
+    th {
+        font-family: Copperplate, 'Copperplate Gothic Light', fantasy;
+        color: #000000;
+        font-size: 25px;
+        text-align: center;
+    }
+    
+    td {
+        font-family: Copperplate, 'Copperplate Gothic Light', fantasy;
+        color: #000000;
+        font-size: 20px;
+        text-align: center;
+    }
+    
+</style>
+</head>
+<body class="pd2139">
+  <form action="{{ url_for('index') }}" method="get">
+    <div class="pd2139-artboard-2">
+        <div class="pd2139-0-0">
+            <div class="pd2139-0-0-0">
+                <div class="pd2139-layout-6">
+                    <div class="pd2139-0-0-0-0-0">
+                        <div class="pd2139-label-6">
+                            Your Outfit For {{ location["name"] }}:
+                        </div>
+                    </div>
+                    <div class="pd2139-0-0-0-0-1">
+                        <div class="pd2139-label2">
+                            Temperature: {{ location["temperature"] }} &#8457, Weather: {{ location["status"] }}
+                        </div>
+                    </div>
+                    <div class="pd2139-0-0-0-0-2">
+                        <div class="pd2139-table-container-4">
+                          <table class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th>Top</th>
+                                  <th>Bottom</th>
+                                  <th>Shoes</th>
+                                  <th>Accessory</th>
+                                </tr>
+                              </thead>
+                              <tfoot></tfoot>
+                              <tbody>
+                                {% for item in outfit %}
+                                <tr>
+                                    <td><a href="{{ item['toplink'] }}"target="_blank"> {{ item['top'] }}</a></td>
+                                    <td><a href="{{ item['bottomlink'] }}"target="_blank"> {{ item['bottom'] }}</a></td>
+                                    <td><a href="{{ item['shoeslink'] }}"target="_blank"> {{ item['shoes'] }}</a></td>
+                                    <td><a href="{{ item['accessorylink'] }}"target="_blank"> {{ item['accessory'] }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="{{ item['toppiclink'] }}" target="_blank">
+                                      <img src= "{{ item['toppicture'] }}" style="width:150px;height:200px">
+                                    </a></td>
+                                    <td><a href="{{ item['bottompiclink'] }}" target="_blank">
+                                      <img src="{{ item['bottompicture'] }}" style="width:150px;height:200px">
+                                    </a></td>
+                                    <td><a href="{{ item['shoepiclink']}}" target="_blank">
+                                      <img src="{{ item['shoespicture'] }}" style="width:150px;height:200px">
+                                    </a></td>
+                                    <td><a href= "{{ item['accessorypiclink'] }}" target="_blank">
+                                      <img src="{{ item['accessorypicture'] }}" style="width:150px;height:200px">
+                                    </a></td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pd2139-0-0-1">
+                <button class="pd2139-return-6" type="submit">
+                    <span class="pd2139-0-0-1-0-0">Find new outfit!</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
