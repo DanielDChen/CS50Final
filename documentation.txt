@@ -1,0 +1,92 @@
+Fast Fashion documentation.txt
+==============================
+
+*** Project Setup ****
+
+This project was made with the CS50 IDE, and uses Python 3, Flask, HTML 5, CSS, and SQL. It is intended to be run with the CS50 IDE, which
+allows interpretation of the Python code, access to the SQL database, etc. all from one IDE.
+
+Below is a walkthrough of each file contained in our project, as well as the necessary dependencies, Python wrappers, and other things
+to be installed. A more detailed description of the design choices we made is available in design.txt.
+
+The project should be hosted in the CS50 IDE ~/workspace, in a folder called project/ 
+(or another name if you so choose）
+
+requirements.txt
+----------------
+This text contains the dependencies for this project that must be installed, within ~workspace/project
+Execute the following code in the terminal within ~/workspace/project/:
+    pip3 install --user -r requirements.txt
+
+PyOWM
+-----
+To access weather information for the user's input, we used a Python wrapper library called PyOWM. It allows us to access
+weather information for a given location, from the OpenWeatherMap(OWM) web API. It uses a simple object model to return 
+the weather information for Python application usage.
+
+PyOWM's documentation is available at https://github.com/csparpa/pyowm, but this section of the documentation file 
+will cover what is necessary for this particular project.
+
+The OWM web API requires a valid API key to return a response. The API key we had was 647613b0420866b915de469efc8b2732,
+which will later be used in application.py (documentation for that is below). A different API key can be obtained by signing up at
+https://home.openweathermap.org/users/sign_up.
+
+To install PyOWM, execute the following code in ~/workspace/project/:
+    sudo easy_install pyowm
+
+Note that this code is specifically for the CS50 IDE (or Cloud 9 IDE), and not for other IDEs. 
+easy_install requires Sudo; without Sudo, a "permission denied" error will occur.
+
+Helpers.py
+----------
+
+Helpers.py contains one function, apology(), which returns an apology page depending on what the user has done incorrectly when using
+our website. 
+
+There is no extra compilation or other configurations needed to be done for this Python file.
+
+
+Application.py
+--------------
+This Python file contains the majority of our back-end code for this website. 
+One note: As mentioned earlier, an API key is needed to access the OWM web API (through PyOWM). The following line of code accomplishes that:
+owm = pyowm.OWM('647613b0420866b915de469efc8b2732')
+
+There is no extra compilation or other configurations needed to be done for this Python file.
+
+project.db
+----------
+This .db file contains several tables in SQL, including MaleOutfits, FemaleOutfits, as well as a list of locations associated with zipcodes, 
+imported from US.txt (from Problem Set 8).
+
+To view the database and the tables used in this project, excecute the following code in a terminal in ~/workspace/project/:
+    phpliteadmin project.db
+    
+There is no extra compilation or other configurations needed to be done for this file.
+
+*** Project Usage ****
+
+Start Flask’s built-in web server (within project/), using the following code in the terminal:
+    flask run
+    
+Afterwards, select CS50 IDE > Web Server in the top left corner to actually run the website.
+
+On the home page of the website, the user will input a valid US zipcode (i.e. only 5 digits long, no more no less), and check
+whether or not they would like to view Men's Clothing, or Women's Clothing. Afterwards, the user can click the "Dress Me" button,
+upon which the backend code in application.py will generate an outfit from the SQL databases in project.db, and display them to the user
+in a new page.
+
+On the new page, the user can view the outfit generated for them. There are four parts of the outfit recommendation:
+Top, Bottom, Shoes, and Accessory.
+The second row of the table contains the recommendations in text form. Clicking on the actual text results in a link opened in a new tab,
+that directs the user to Amazon, where they will be able to purchase that outfit part (the search query in Amazon is automatically inputted
+for the user as that outfit part).
+The third row of the table contains the recommendations in picture form. Clicking on the picture results in a link opened in a new tab,
+that directs the user to be able to purchase that particular outfit part that is actually shown in the picture. This is slightly different from the
+link that the user clicks in the second row of the table.
+
+Finally, the user can click the "Find New Outfit" button on the bottom of the page, which redirects them back to the homepage. There, they can
+either change their location zipcode or preferred gender's clothing inputs and generate a new outfit. Or, if they generate an outfit
+for the exact same input, they can get a different randomly generated outfit. The design choices behind this are elaborated on in design.txt.
+
+This was Fast Fashion's documentation.txt.

@@ -1,0 +1,115 @@
+Fast Fashion design.txt
+==============================
+
+This CS50 Final Project, titled Fast Fashion, is a web-based application, primarily using Python and SQL (inspired by Problem Set 7).
+We also use HTML and CSS (mainly written through PageDraw, but also with some editing on our part). We chose to develop this project
+through CS50 IDE as the shared workspace functionality allowed us to easily collaborate on the project, as well as due to our familiarity
+and comfort levels.
+
+Fast Fashion takes in two user inputs, the user's location, and which gender's clothing the user would like to see. Based on these
+two inputs, an outfit recommendation is generated for the user, through both text as well as pictures. 
+Clicking on the textual recommendation will link the user to an Amazon search query for that general outfit part, such as for
+"puffy jacket", while clicking on the picture will link the user to the Amazon page for that specific brand item depicted in the picture.
+
+PageDraw
+--------
+We chose to use PageDraw because of its capability to assist us in designing the webpages we wanted, without having to write all of
+the HTML and CSS ourselves. 
+
+apology.html
+------------
+Returns an apology page for the user, like that from Problem Set 7, C$50 Finance. We chose to include this page to help the user
+correct errors in their input. 
+
+index.html
+----------
+Initial landing page of the website, when the user accesses the website through a GET request. This page allows the user to input
+a zipcode, check whether they want to see male or female clothing, and then click a "Dress Me" button to actually generate the outfit.
+Upon clicking the "Dress Me" button, they are redirected to a results page that displays their outfit recommendation.
+
+results.html
+------------
+This results page shows the outfit recommendation for the user through an HTML table. The first row of the HTML table shows
+the user's outfit suggestion in text form, and upon clicking the text, is redirected to an Amazon search query page. The second row of
+the HTML table contains pictures of the outfit suggestion, and upon clicking a picture, the user is redirected to an Amazon link
+where he or she can actually purchase the specific item shown in that picture. 
+
+We decided to have these two different links to serve two different needs of our users. On one hand, a user may be just interested in purchasing
+a general "puffy jacket", in which case they would be served by clicking on the link embedded in the textual recommendation. On the other hand,
+a user may want the specific item shown in our recommendation picture, in which case clicking on the picture will direct the user to that specific item, 
+and not a general Amazon search query page.
+
+PyOWM
+-----
+To access weather information for the user's input, we used a Python wrapper library called PyOWM. It allows us to access
+weather information for a given location, from the OpenWeatherMap(OWM) web API. It uses a simple object model to return 
+the weather information for Python application usage. 
+
+We felt that retrieving the weather information for a user's inputted location through Python and generating the outfit recommendation
+in Python (with SQL) would be the most straightforward way to input our project, hence our choice to use PyOWM.
+
+project.db
+----------
+project.db contains three tables, "places", "MaleOutfits", and "FemaleOutfits".
+
+The "places" table is identical to the "places" table of Problem Set 8, Mashup. This is because while we had the user input his or her zipcode
+to get their location for simplicity's sake, the PyOWM wrapper needed latitude and longitude coordinates of a place
+to actually retrieve the weather information for that location.  
+Hence, the "places" table from Problem Set 8 would serve us well here, containing a list of all US zipcodes 
+as well as corresponding latitude and longitude coordinates for those zipcodes.
+
+The "MaleOutfits" and "FemaleOutfits" tables are identical in structure, but with different entries (for male outfits and female outfits).
+Each outfit contains four parts, "Top", "Bottom", "Shoes", and "Accessory". For each of the four outfit parts, there is a link to a picture
+of each respective outfit part, and the link to purchase the specific brand outfit part that is shown in the picture.
+This link to purchase the specific brand outfit is what the user is redirected to when they click on the picture
+on the results.html page. 
+
+Note that this picture link is different from the link generated in application.py, which is what the user is redirected to when 
+they click the text on not the picture. The link created in application.py simply redirects the user to the search results in Amazon 
+for a general outfit part, like https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=puffy+jacket for example.
+
+Also note that for both the MaleOutfits and FemaleOutfits tables, entries
+with ids 1-5 correspond to outfits for hot temperatures, entries with ids 6-10 correspond to outfits for cold temperatures, and entries
+with ids 11-15 correspond to outfits for medium temperatures. We set the cutoff for hot temperature and cold temperature in application.py.
+
+application.py
+--------------
+In application.py. the backend functionality of our website is implemented. 
+
+The first function in application.py is an apology() function, like the one used in Problem Set 7，C$50 Finance. This simply
+redirects the user to an error/apology page (apology.html)
+
+Next is index(), where the outfit is actually generated (from the SQL tables in project.db).
+
+We obtain information about the weather at the coordinates of the user-inputted zipcode
+(which were obtained from the SQL table of places) using the PyOWM wrapper's owm.weather_at_coords() function.
+This information is then stored in an observation object, on which we can use methods such as .get_weather() and .get_location().
+    observation = owm.weather_at_coords(rows[0]["latitude"], rows[0]["longitude"])
+    w = observation.get_weather()
+    l = observation.get_location()
+    
+We then store information about the location's temperature, weather, etc. in a location dict object, making use of the PyOWM wrapper
+functions, storing the information in dict key-value pairs as follows:
+    location["name"] = l.get_name()
+    location["temperature"] = w.get_temperature('fahrenheit')['temp']
+    location["status"] = w.get_detailed_status() 
+    
+In generating the outfit, we first check
+if the user checked Male or Female clothing, and then based on the location's temperature, select one of five random outfits for 
+that temperature from the MaleOutfits or FemaleOutfits SQL tables (using the random.randint function from Python's random module.
+
+The selection returned from db.execute is stored in an outfit object, which is a list of dictionaries (technically containing only one dictionary,
+the outfit selected). In addition to the  
+top, bottom, shoes, accessory, toppicture, bottompicture, shoespicture, accessorypicture, toppiclink, bottompiclink, shoepiclink, accessorypiclink
+entries already stored in the SQL table, we add links to Amazon search queries for the generic outfit part in the appropriate
+gender's section, by having the code below.
+ outfit[0]["toplink"] = "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=" + outfit[0]["top"] +"+men"
+This code creates a key value pair, with key being "toplink" and the value being the link to an Amazon search query for the top outfit part.
+We do the same to create key value pairs for "bottomlink", "shoeslink", and "accessorylink".
+
+In our SQL tables, we used "+" characters to represent spaces, since that is how spaces are represented in the Amazon search query URL.
+However, in displaying the outfit parts in the HTML table, we want to display actual outfits instead of spaces, so we simply
+replaced the "+" characters with " " characters using .replace().
+outfit[0]["accessory"] = outfit[0]["accessory"].replace("+", " ")
+
+This was Fast Fashion's design.txt.
